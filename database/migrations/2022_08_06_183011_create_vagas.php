@@ -15,11 +15,10 @@ return new class extends Migration
     {
         Schema::create('vagas', function (Blueprint $table) {
             $table->bigIncrements('id_vaga');
-            $table->unsignedBigInteger('id_cartao');
             $table->boolean('cheia');
             $table->timestamps();
 
-            $table->foreign('id_cartao')->references('id_cartao')->on('cartoes')->onDelete('CASCADE');
+
         });
     }
 

@@ -40,8 +40,8 @@ class CartoesController extends Controller
      */
     public function store(Request $request)
     {
-        $cartao = Cartoes::store($request->all());
-        redirect('cartoes.index');
+        $cartao = Cartoes::create($request->all());
+        return redirect()->route( 'cartoes.index');
     }
 
     /**

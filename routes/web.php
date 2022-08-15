@@ -22,4 +22,6 @@ Auth::routes([
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('cartoes',\App\Http\Controllers\CartoesController::class);
+Route::get('/create/{id}',[\App\Http\Controllers\CartoesController::class,'criar'])->name('cartoes.create');
 Route::resource('vagas',\App\Http\Controllers\VagasController::class);
+Route::resource('cadastros',\App\Http\Controllers\CadastrosController::class);

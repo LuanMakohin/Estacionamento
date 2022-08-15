@@ -11,4 +11,5 @@ class Vagas extends Model
     protected $table = 'VAGAS';
     protected $primaryKey = 'id_vaga';
     protected $fillable = ['cheia'];
+
 }

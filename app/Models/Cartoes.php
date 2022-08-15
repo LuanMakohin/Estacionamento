@@ -10,5 +10,11 @@ class Cartoes extends Model
     use HasFactory;
     protected $table = 'CARTOES';
     protected $primaryKey = 'id_cartao';
-    protected $fillable = ['hora_entrada', 'vaga', 'saldo'];
+    protected $fillable = ['id_cadastro','saldo_cartao','vaga'];
+
+    public function cadastro(){
+        return $this->belongsTo(Cadastros::class,'id_cadastro');
+    }
+
+
 }

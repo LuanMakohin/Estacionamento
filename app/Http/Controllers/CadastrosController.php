@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cadastros;
+use App\Models\Cartoes;
 use Illuminate\Http\Request;
 
-class UsuariosController extends Controller
+class CadastrosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +15,8 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        //
+        $cadastros = Cadastros::with(['cartao'])->paginate(10);
+        return view('cadastros.index',compact('cadastros'));
     }
 
     /**
@@ -23,7 +26,8 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        //
+        $cadastro = new Cadastros();
+        return view('cadastros.create',compact('cadastro'));
     }
 
     /**
@@ -34,7 +38,8 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cadastro = Cadastros::create($request->all());
+        return redirect()->route('cadastros.index')->with('alert-sucess','Usuario cadastrado com sucesso!');
     }
 
     /**
@@ -43,9 +48,9 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Cadastros $cadastro)
     {
-        //
+        return view('cadastros.show',compact('cadastro'));
     }
 
     /**
@@ -56,7 +61,8 @@ class UsuariosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cadastro = Cadastros::findOrFail($id);
+        return view('cadastros.edit',compact('cadastro'));
     }
 
     /**
@@ -68,7 +74,9 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cadastro = Cadastros::findOrFail($id);
+        $cadastro->update($request->all());
+        return redirect()->route('cadastros.index')->with('alert-sucess','Cadastro atualizado com sucesso!');
     }
 
     /**
@@ -79,6 +87,8 @@ class UsuariosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cadastro = Cadastros::findOrFail($id);
+        $cadastro->delete();
+        return redirect()->route('cadastros.index')->with('alert-success','Cadastro excluído com sucesso');
     }
 }

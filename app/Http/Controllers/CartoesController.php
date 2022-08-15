@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cadastros;
 use App\Models\Cartoes;
+use App\Models\Vagas;
 use Faker\Core\DateTime;
 use Illuminate\Http\Request;
 use Spatie\Ignition\Tests\TestClasses\Models\Car;
@@ -16,21 +18,31 @@ class CartoesController extends Controller
      */
     public function index()
     {
-        $cartoes = Cartoes::get()->all();
+        $cartoes = Cartoes::with('cadastro')->paginate(10);
         return view('cartoes.index',compact('cartoes'));
+    }
+
+    public function create(Request $request,$id){
+        $cartao = new Cartoes();
+        $cadastro = Cadastros::where('id_cadastro',$id)->first();
+        $vagas = Vagas::get()->all();
+        return view('cartoes.create',compact('cartao','cadastro','vagas'));
     }
 
     /**
      * Show the form for creating a new resource.
-     *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function criar(Request $request,$id)
     {
         $cartao = new Cartoes();
-        $data = new DateTime();
-        return view('cartoes.create',compact('cartao','data'));
+        $cadastro = Cadastros::where('id_cadastro',$id)->first();
+        $vagas = Vagas::get()->all();
+
+        return view('cartoes.create',compact('cartao','cadastro','vagas'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -40,8 +52,13 @@ class CartoesController extends Controller
      */
     public function store(Request $request)
     {
+
+        $vaga = Vagas::where('id_vaga',$request->vaga)->first();
+        $vaga->update(['cheia' => 1]);
         $cartao = Cartoes::create($request->all());
-        return redirect()->route( 'cartoes.index');
+
+
+        return redirect()->route('cartoes.index')->with('alert-sucess','Cartão criado com sucesso!');
     }
 
     /**
@@ -50,9 +67,10 @@ class CartoesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {   $cartao = Cartoes::where('id_cartao','=',$id)->get()->all();
-        return view('cartoes.show',compact('cartao','id'));
+    public function show( $id)
+    {
+        $cartao = Cartoes::findOrFail($id);
+        return view('cartoes.show',compact('cartao'));
     }
 
     /**
@@ -63,7 +81,8 @@ class CartoesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cartao = Cartoes::findOrFail($id);
+        return view('cartoes.edit',compact('cartao'));
     }
 
     /**
@@ -75,7 +94,9 @@ class CartoesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cartao = Cartoes::findOrFail($id);
+        $cartao->update($request->all());
+        return redirect()->route('cartoes.index')->with('alert-sucess','Cartão atualizado com sucesso!');
     }
 
     /**
@@ -86,6 +107,10 @@ class CartoesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cartao = Cartoes::findOrFail($id);
+        $vaga = Vagas::where('id_vaga',$cartao->vaga)->first();
+        $vaga->update(['cheia' => 0]);
+        $cartao->delete();
+        return redirect()->route('cartoes.index')->with('alert-success','Cartão excluído com sucesso');
     }
 }

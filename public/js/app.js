@@ -5265,35 +5265,7 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_bootstrap__WEBPACK_IMPORTED_MODULE_0__);
- // Graph
 
-var ctx = document.getElementById("myChart");
-var myChart = new Chart(ctx, {
-  type: "line",
-  data: {
-    labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    datasets: [{
-      data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-      lineTension: 0,
-      backgroundColor: "transparent",
-      borderColor: "#007bff",
-      borderWidth: 4,
-      pointBackgroundColor: "#007bff"
-    }]
-  },
-  options: {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: false
-        }
-      }]
-    },
-    legend: {
-      display: false
-    }
-  }
-});
 
 /***/ }),
 

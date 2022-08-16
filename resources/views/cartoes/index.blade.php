@@ -13,7 +13,6 @@
                         <th scope="col">Usuário</th>
                         <th scope="col">Hora de entrada</th>
                         <th scope="col">Vaga</th>
-                        <th scope="col">Saldo</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -24,7 +23,6 @@
                         <td class="table-dark">{{$cartao->cadastro->nome}}</td>
                         <td class="table-dark">{{$cartao->hora_entrada ?? ''}}</td>
                         <td class="table-dark">{{$cartao->vaga ?? ''}}</td>
-                        <td class="table-dark">{{$cartao->saldo}}</td>
                         <td>
                             <button class="btn btn-warning"><a style="text-decoration: none;color: black" href="{{route('cartoes.show',$cartao->id_cartao)}}"><i class="fa-solid fa-eye"></i></a></button>
                             <button class="btn btn-info"><a style="text-decoration: none;color: black" href="{{route('cartoes.edit',$cartao->id_cartao)}}"><i class="fa-solid fa-pen-to-square"></i></a></button>

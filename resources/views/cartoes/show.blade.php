@@ -12,7 +12,7 @@
                 <form class="col-md-auto" action="{{route('cartoes.destroy',$cartao->id_cartao)}}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger" type="submit" role="button">Excluir</button>
+                    <button class="btn btn-warning" type="submit" role="button">Finalizar cartão</button>
                 </form>
             </div>
         </div>

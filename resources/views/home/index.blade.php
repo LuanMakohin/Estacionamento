@@ -56,7 +56,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card-body text-center">
-                            <h2 class="card-title">Saldo total: {{$saldo}}</h2>
+                            <h2 class="card-title">Saldo total: {{number_format($saldo, 2)}}</h2>
                             <h4>Valor total de todos os cadastros ativos.</h4>
                         </div>
                     </div>

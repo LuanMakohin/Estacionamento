@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Cadastros;
 use App\Models\Cartoes;
 use App\Models\Vagas;
+use Carbon\CarbonTimeZone;
 use Faker\Core\DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Spatie\Ignition\Tests\TestClasses\Models\Car;
 
 class CartoesController extends Controller
@@ -108,8 +110,14 @@ class CartoesController extends Controller
     public function destroy($id)
     {
         $cartao = Cartoes::findOrFail($id);
+        $date1 = new Carbon($cartao->hora_entrada);
+        $date2 = Carbon::now()->setTimezone('-3:00');
+        $value = $date2->floatDiffInRealMinutes($date1);
+        $cartao->update(['saldo_cartao'=>$value/60]);
         $vaga = Vagas::where('id_vaga',$cartao->vaga)->first();
         $vaga->update(['cheia' => 0]);
+        $cadastro = Cadastros::where('id_cadastro',$cartao->id_cadastro)->first();
+        $cadastro->update(['saldo'=>$cadastro->saldo+$value/60]);
         $cartao->delete();
         return redirect()->route('cartoes.index')->with('alert-success','Cartão excluído com sucesso');
     }

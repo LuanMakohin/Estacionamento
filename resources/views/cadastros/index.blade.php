@@ -25,7 +25,7 @@
                             <td>{{ $cadastro->nome}}</td>
                             <td>{{$cadastro->carro}}</td>
                             <td>{{$cadastro->placa}}</td>
-                            <td>{{$cadastro->saldo}}</td>
+                            <td>{{number_format($cadastro->saldo,2)}}</td>
                             <td>
                                 <button class="btn btn-warning"><a style="text-decoration: none;color: black" href="{{route('cadastros.show',$cadastro->id_cadastro)}}"><i class="fa-solid fa-eye"></i></a></button>
                                 <button class="btn btn-info"><a style="text-decoration: none;color: black" href="{{route('cadastros.edit',$cadastro->id_cadastro)}}"><i class="fa-solid fa-pen-to-square"></i></a></button>
